@@ -77,8 +77,7 @@ static void change_position(size_t x_offset, size_t y_offset)
 static void handle_newline()
 {
 	terminal_column = 0;
-	if (++terminal_row == VGA_HEIGHT) 
-		scroll();
+	change_position(0, 1);
 }
 
 void terminal_putchar(char c) 
@@ -91,11 +90,7 @@ void terminal_putchar(char c)
 
 	terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
 	
-	if (++terminal_column == VGA_WIDTH) {
-		terminal_column = 0;
-		if (++terminal_row == VGA_HEIGHT)
-			scroll();
-	}
+	change_position(1, 0);
 }
 
 void terminal_write(const char* data, size_t size) {
